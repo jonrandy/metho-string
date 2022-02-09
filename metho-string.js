@@ -2,6 +2,9 @@
 import * as Metho from "metho"
 
 const target = String.prototype
+const STRING_TARGET = "string"
+
+target[Metho.data] = STRING_TARGET
 
 function addWithMaybeRegisteredSymbolName(target, func, symbolName) {
 	const registered = Metho.registered(symbolName)
