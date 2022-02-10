@@ -40,8 +40,12 @@ export const lower = Metho.add(target, function lower() {
 	return this.toLowerCase()
 })
 
-
-
+// proper - convert string to proper case
+export const proper = Metho.add(target, function proper() {
+	return this.replace(/\w\S*/g, function (txt) {
+		return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+	})
+})
 
 function addWithMaybeRegisteredSymbolName(target, func, symbolName) {
 	const registered = Metho.registered(symbolName)
