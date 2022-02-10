@@ -7,6 +7,42 @@ const STRING_FLAG = "string"
 
 target[Metho.data] = STRING_FLAG
 
+// chunk - chunk an array or string in to pieces of given size
+const chunkFunc = function chunk(size) {
+	let res = []
+
+	if (this[Metho.data] == ARRAY_FLAG) {
+		// chunk array
+		let chunk
+		for (let i = 0; i < this.length; i += size) {
+			chunk = this.slice(i, i + size)
+			res.push(chunk)
+		}
+	} else if (this[Metho.data] == STRING_FLAG) {
+		// chunk string
+		res = this.match(new RegExp(".{1," + size + "}", "g"))
+	}
+	return res
+}
+export const chunk = addWithMaybeRegisteredSymbolName(
+	target,
+	chunkFunc,
+	"arrayOrStringChunk"
+)
+
+// upper - convert string to upper case
+export const upper = Metho.add(target, function upper() {
+	return this.toUpperCase()
+})
+
+// lower - convert string to lower case
+export const lower = Metho.add(target, function lower() {
+	return this.toLowerCase()
+})
+
+
+
+
 function addWithMaybeRegisteredSymbolName(target, func, symbolName) {
 	const registered = Metho.registered(symbolName)
 	let ret
@@ -25,28 +61,3 @@ function addWithMaybeRegisteredSymbolName(target, func, symbolName) {
 	}
 	return ret
 }
-
-
-// chunk an array or string in to pieces of given size
-const chunkFunc = function chunk(size) {
-	let res = []
-
-	if (this[Metho.data] == ARRAY_FLAG) {
-
-		// chunk array
-		let chunk
-		for (let i = 0; i < this.length; i += size) {
-			chunk = this.slice(i, i + size)
-			res.push(chunk)
-		}
-
-	} else if (this[Metho.data] == STRING_FLAG) {
-
-		// chunk string
-		res = this.match(new RegExp('.{1,' + size + '}', 'g'))
-
-	}
-	return res
-}
-
-export const chunk = addWithMaybeRegisteredSymbolName(target, chunkFunc, 'arrayOrStringChunk')
