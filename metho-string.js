@@ -47,6 +47,11 @@ export const proper = Metho.add(target, function proper() {
 	})
 })
 
+// reverse - reverse the string
+export const reverse = Metho.add(target, function reverse() {
+	return [...this].reverse().join("")
+})
+
 function addWithMaybeRegisteredSymbolName(target, func, symbolName) {
 	const registered = Metho.registered(symbolName)
 	let ret
