@@ -48,9 +48,31 @@ export const proper = Metho.add(target, function proper() {
 })
 
 // reverse - reverse the string
-export const reverse = Metho.add(target, function reverse() {
-	return [...this].reverse().join("")
-})
+export const reverse = addWithMaybeRegisteredSymbolName(
+	target,
+	function reverse() {
+		return [...this].reverse().join("")
+	},
+	"arrayOrStringReverse"
+)
+
+// head - return first character of string
+export const head = addWithMaybeRegisteredSymbolName(
+	target,
+	function head() {
+		return this[0]
+	},
+	"arrayOrStringHead"
+)
+
+// tail - return string without the head
+export const tail = addWithMaybeRegisteredSymbolName(
+	target,
+	function tail() {
+		return this.substr(1)
+	},
+	"arrayOrStringTail"
+)
 
 function addWithMaybeRegisteredSymbolName(target, func, symbolName) {
 	const registered = Metho.registered(symbolName)
