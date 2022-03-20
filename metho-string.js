@@ -24,10 +24,25 @@ const chunkFunc = function chunk(size) {
 	}
 	return res
 }
-export const chunk = addWithMaybeRegisteredSymbolName(
+export const chunk = Metho.addWithSharedSymbolName(
 	target,
 	chunkFunc,
 	"arrayOrStringChunk"
+)
+
+// pieces - divide an array or string in to given number of pieces (attempt to balance number of items in each piece by default)
+const piecesFunc = function pieces(count, balanced=true) {
+	if (!balanced) return this[chunk(Math.ceil(this.length/count))]
+	let result = [], isArray = this[Metho.data] == ARRAY_FLAG, arr = [...this];
+	for (let i=count; i > 0; i--) {
+		result.push(arr.splice(0, Math.ceil(arr.length / i)));
+	}
+	return isArray ? result : result.map(arr=>arr.join(''))
+}
+export const pieces = Metho.addWithSharedSymbolName(
+	target,
+	piecesFunc,
+	"arrayOrStringPieces"
 )
 
 // upper - convert string to upper case
@@ -48,7 +63,7 @@ export const proper = Metho.add(target, function proper() {
 })
 
 // reverse - reverse the string
-export const reverse = addWithMaybeRegisteredSymbolName(
+export const reverse = Metho.addWithSharedSymbolName(
 	target,
 	function reverse() {
 		return [...this].reverse().join("")
@@ -57,7 +72,7 @@ export const reverse = addWithMaybeRegisteredSymbolName(
 )
 
 // head - return first character of string
-export const head = addWithMaybeRegisteredSymbolName(
+export const head = Metho.addWithSharedSymbolName(
 	target,
 	function head() {
 		return this[0]
@@ -66,29 +81,10 @@ export const head = addWithMaybeRegisteredSymbolName(
 )
 
 // tail - return string without the head
-export const tail = addWithMaybeRegisteredSymbolName(
+export const tail = Metho.addWithSharedSymbolName(
 	target,
 	function tail() {
 		return this.substr(1)
 	},
 	"arrayOrStringTail"
 )
-
-function addWithMaybeRegisteredSymbolName(target, func, symbolName) {
-	const registered = Metho.registered(symbolName)
-	let ret
-	if (registered) {
-		if (!func.length) {
-			// if already registerd and no params, re-use symbol
-			ret = Metho.add(target, func, { useSymbol: registered })
-		} else {
-			// else if already registered and has params, don't overwrite function, just update targets (function will have to deal with both targets)
-			ret = registered
-			ret.targets = [...new Set([...ret.targets, target])]
-		}
-	} else {
-		// if not registered, create a new Symbol and register it
-		ret = Metho.add(target, func, { register: true, symbolName })
-	}
-	return ret
-}
