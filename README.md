@@ -24,7 +24,7 @@ import { chunk, pieces, upper, lower, proper, reverse, head, tail } from 'metho-
 "Hello World"[lower] // "hello world"
 
 // proper
-"HELLO WORLD"[proper] // "Hello World
+"HELLO WORLD"[proper] // "Hello World"
 
 // reverse (if already imported from metho-array, it will also work with strings)
 "123"[reverse] // "321"
