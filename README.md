@@ -15,7 +15,7 @@ import { chunk, pieces, upper, lower, proper, reverse, head, tail } from 'metho-
 // > balanced - attempt to balance the number of items in each piece
 "1111111111"[pieces(4)] // ["111", "111", "11", "11"]
 // > not balanced
-"1111111111"[pieces(4)] // ["111", "111", "111", "1"]
+"1111111111"[pieces(4, false)] // ["111", "111", "111", "1"]
 
 // upper
 "Hello World"[upper] // "HELLO WORLD"
