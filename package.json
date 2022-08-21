@@ -1,6 +1,6 @@
 {
   "name": "metho-string",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "JavaScript String prototype extensions using Metho",
   "main": "metho-string.js",
   "type": "module",
@@ -30,6 +30,6 @@
   },
   "homepage": "https://github.com/jonrandy/metho-string#readme",
   "dependencies": {
-    "metho": "^0.0.6"
+    "metho": "^1.0.0"
   }
 }
